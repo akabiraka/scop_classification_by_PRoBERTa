@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=proberta_scop
-#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/proberta_scop-%j.output
-#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/proberta_scop-%j.error
+#SBATCH --job-name=pbert
+#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.output
+#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.error
 #SBATCH --mail-user=<akabir4@gmu.edu>
 #SBATCH --mail-type=BEGIN,END,FAIL
 
@@ -20,11 +20,11 @@ ENCODER_LAYERS=5
 TOTAL_UPDATES=1000
 WARMUP_UPDATES=40
 PEAK_LR=0.0025
-MAX_SENTENCES=1
-UPDATE_FREQ=2
+MAX_SENTENCES=32
+UPDATE_FREQ=64
 
-NUM_CLASSES=2
-PATIENCE=3
+NUM_CLASSES=2796
+PATIENCE=5
 ROBERTA_PATH=data/preprocess/pretrained_task_agnostic_model/checkpoint_best.pt
 
 TOKENS_PER_SAMPLE=512
