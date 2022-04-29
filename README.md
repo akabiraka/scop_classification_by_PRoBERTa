@@ -1,3 +1,4 @@
+# SCOP classification using PRoBERTa from sequence
 
 #### Downloads
 * Download pretrained tokenizer and vocab: [URL](https://drive.google.com/drive/folders/1lJkG4IAWxSs8mGqSk-MjsaBQFV4Y3dhq)
