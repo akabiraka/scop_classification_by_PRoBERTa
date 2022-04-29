@@ -1,8 +1,8 @@
 #!/usr/bin/sh
 
-#SBATCH --job-name=argo
-#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/argo-%j.output
-#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/argo-%j.error
+#SBATCH --job-name=pbert
+#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.out
+#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.err
 #SBATCH --mail-user=<akabir4@gmu.edu>
 #SBATCH --mail-type=BEGIN,END,FAIL
 
