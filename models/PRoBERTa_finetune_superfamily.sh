@@ -1,24 +1,24 @@
 #!/bin/bash
 
-#SBATCH --job-name=pbert
-#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.output
-#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbert-%j.error
+#SBATCH --job-name=pretrained
+#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pretrained-%j.output
+#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pretrained-%j.error
 #SBATCH --mail-user=<akabir4@gmu.edu>
 #SBATCH --mail-type=BEGIN,END,FAIL
 
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpuq
-#SBATCH --mem=16000MB
+#SBATCH --mem=32000MB
 
 HEAD_NAME=protein_superfam_classification
-PREFIX=superfam
+PREFIX=superfam_pretrained
 OUTPUT_DIR=outputs/models
 DATA_DIR=data/preprocess/binarized/
 
 ENCODER_EMBED_DIM=768
 ENCODER_LAYERS=5
-TOTAL_UPDATES=1000
-WARMUP_UPDATES=40
+TOTAL_UPDATES=12500
+WARMUP_UPDATES=3125
 PEAK_LR=0.0025
 MAX_SENTENCES=32
 UPDATE_FREQ=64
@@ -60,7 +60,7 @@ CUDA_VISIBLE_DEVICES=0 fairseq-train  $DATA_DIR \
     --best-checkpoint-metric accuracy --maximize-best-checkpoint-metric \
     --patience $PATIENCE \
     --update-freq $UPDATE_FREQ \
-    --save-dir "$CHECKPOINT_DIR" --save-interval 1 --save-interval-updates 100 --keep-interval-updates 5 \
+    --save-dir "$CHECKPOINT_DIR" --save-interval-updates 100 --no-epoch-checkpoints \
     --log-format simple --log-interval 1000 2>&1 | tee -a "$LOG_FILE"
 
 ## could not install apex, so did not use lamb optimizer
