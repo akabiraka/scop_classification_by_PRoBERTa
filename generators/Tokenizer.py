@@ -33,7 +33,7 @@ class Tokenizer(IGenerator):
         label = str(row[self.task])
 
         with open(out_file_path, "a") as f:
-            f.write(f"{seq_tokened},{label}\n")
+            f.write(f"{seq_tokened},_{label}_\n")
 
 
     def do_linear(self, df, n_rows_to_skip, n_rows_to_evalutate, out_file_path=None):

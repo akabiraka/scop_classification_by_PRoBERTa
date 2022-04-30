@@ -12,7 +12,7 @@
 * Binarize class labels: `bash generators/binarize_labels.sh`
 
 #### Train-test
-* Finetune the model: `bash models/PRoBERTa_finetune_superfamily.sh`
+* Finetune the model: `sbatch models/PRoBERTa_finetune_superfamily.sh`
 * Evaluate the finetuned model: `python models/eval_superfam_classification.py`
 
 #### Todo
