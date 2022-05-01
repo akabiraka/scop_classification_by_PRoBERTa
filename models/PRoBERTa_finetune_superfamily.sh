@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=non_pretrained
-#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/non_pretrained-%j.output
-#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/non_pretrained-%j.error
+#SBATCH --job-name=superfam
+#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/superfam-%j.output
+#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/superfam-%j.error
 #SBATCH --mail-user=<akabir4@gmu.edu>
 #SBATCH --mail-type=BEGIN,END,FAIL
 
@@ -11,7 +11,7 @@
 #SBATCH --mem=32000MB
 
 HEAD_NAME=protein_superfam_classification
-PREFIX=superfam_non_pretrained
+PREFIX=superfam
 OUTPUT_DIR=outputs/models
 DATA_DIR=data/preprocess/binarized/
 
@@ -25,7 +25,7 @@ UPDATE_FREQ=64
 
 NUM_CLASSES=2796
 PATIENCE=5
-ROBERTA_PATH=data/preprocess/pretrained_task_agnostic_model/checkpoint_best_1.pt
+ROBERTA_PATH=data/preprocess/pretrained_task_agnostic_model/checkpoint_best.pt
 
 TOKENS_PER_SAMPLE=512
 MAX_POSITIONS=512
@@ -57,10 +57,10 @@ CUDA_VISIBLE_DEVICES=0 fairseq-train  $DATA_DIR \
     --optimizer adam --adam-betas "(0.9, 0.98)" --adam-eps 1e-06 \
     --clip-norm 0.0 \
     --lr-scheduler polynomial_decay --lr $PEAK_LR --warmup-updates $WARMUP_UPDATES --total-num-update $TOTAL_UPDATES \
-    --best-checkpoint-metric accuracy --maximize-best-checkpoint-metric \
     --patience $PATIENCE \
     --update-freq $UPDATE_FREQ \
     --save-dir "$CHECKPOINT_DIR" --no-epoch-checkpoints \
     --log-format simple --log-interval 1000 2>&1 | tee -a "$LOG_FILE"
 
 ## could not install apex, so did not use lamb optimizer
+##--best-checkpoint-metric accuracy --maximize-best-checkpoint-metric \
