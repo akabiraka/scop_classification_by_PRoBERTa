@@ -15,7 +15,6 @@
 * Finetune the model: `sbatch models/PRoBERTa_finetune_superfamily.sh`
 * Evaluate the finetuned model: `python models/eval_superfam_classification.py`
 
-#### Todo
-* Create two datasets: all and all_exclude_less_than_10_data
-* Finetune and evaluate on both of this set.
-* Fucus on classes having <10 data points when evaluating model finetuned on all.
+#### Analyze
+* To vizualize the training progress: `tensorboard --logdir=outputs/tensorboard_runs/`
+* To download the runs outputs: `scp -r akabir4@argo.orc.gmu.edu:/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/tensorboard_runs/* outputs/tensorboard_runs/`

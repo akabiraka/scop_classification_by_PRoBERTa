@@ -92,8 +92,8 @@ def test(model, data_loader, class_dict, criterion, device):
 def get_metrics(target_classes, pred_classes):
     from sklearn.metrics import accuracy_score, recall_score, precision_score, log_loss
     acc = accuracy_score(target_classes, pred_classes)
-    precision = precision_score(target_classes, pred_classes)
-    recall = recall_score(target_classes, pred_classes)
+    precision = precision_score(target_classes, pred_classes, average="micro")
+    recall = recall_score(target_classes, pred_classes, average="micro")
     loss = log_loss(target_classes, pred_classes)
     return {"acc": acc, "precision": precision, "recall": recall, "log_loss": loss}
     
