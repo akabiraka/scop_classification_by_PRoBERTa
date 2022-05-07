@@ -11,10 +11,7 @@ class Pooler(torch.nn.Module):
                                                           checkpoint_file="checkpoint_best.pt",
                                                           bpe="sentencepiece", 
                                                           sentencepiece_model="data/preprocess/pretrained_tokenization_model/m_reviewed.model")
-        self.classifier = torch.nn.Sequential(torch.nn.Linear(768, inner_dim),
-                                              torch.nn.Dropout(p=drop_prob),
-                                              torch.nn.LeakyReLU(),
-                                              torch.nn.Linear(inner_dim, n_classes))
+        self.classifier = torch.nn.Linear(768, n_classes)
 
 
     def forward(self, tokenized_seq):
