@@ -12,11 +12,11 @@
 #SBATCH --mem=16000MB
 
 ##GPU jobs
-##SBATCH --partition=gpuq
-##SBATCH --gres=gpu:2
-##SBATCH --mem=16000MB
-##SBATCH --time=1-24:00
+#SBATCH --partition=gpuq
+#SBATCH --gres=gpu:2
+#SBATCH --mem=16000MB
+#SBATCH --time=1-24:00
 
-python generators/Tokenizer.py
-##python models/train_val.py
+##python generators/Tokenizer.py
+python models/train_val.py
 

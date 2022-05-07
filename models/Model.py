@@ -19,6 +19,7 @@ class Pooler(torch.nn.Module):
 
     def forward(self, tokenized_seq):
         input_ids = self.roberta.encode(tokenized_seq)
+        input_ids = input_ids[:512]
         # print(tokens)
 
         features = self.roberta.extract_features(input_ids) # Extract the last layer's features, [batch_size, tokens_len, 786]
