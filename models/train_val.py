@@ -57,7 +57,6 @@ for epoch in range(1, epochs+1):
     writer.add_scalar('acc',metrics["acc"],epoch)
     writer.add_scalar('precision',metrics["precision"],epoch)
     writer.add_scalar('recall',metrics["recall"],epoch)
-    writer.add_scalar('log_loss',metrics["log_loss"],epoch)
     
 
     if val_loss < best_loss:
