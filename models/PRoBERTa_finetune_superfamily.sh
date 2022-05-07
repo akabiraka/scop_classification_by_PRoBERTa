@@ -64,3 +64,6 @@ CUDA_VISIBLE_DEVICES=0 fairseq-train  $DATA_DIR \
 
 ## could not install apex, so did not use lamb optimizer
 ##--best-checkpoint-metric accuracy --maximize-best-checkpoint-metric \
+
+# https://github.com/pytorch/fairseq/blob/main/examples/roberta/README.custom_classification.md
+# The above command will finetune with an effective batch-size of 32 sentences (--batch-size=8 --update-freq=4).

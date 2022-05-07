@@ -49,4 +49,11 @@ t = Tokenizer()
 #t.do_linear(pd.read_csv("data/splits/all_cleaned.txt"), 0, 40000, "data/preprocess/tokenized/all.txt")
 #t.do_linear(pd.read_csv("data/splits/train_24538.txt"), 0, 40000, "data/preprocess/tokenized/train.txt")
 #t.do_linear(pd.read_csv("data/splits/val_4458.txt"), 0, 40000, "data/preprocess/tokenized/val.txt")
-t.do_linear(pd.read_csv("data/splits/test_5862.txt"), 0, 40000, "data/preprocess/tokenized/test.txt")
+# t.do_linear(pd.read_csv("data/splits/test_5862.txt"), 0, 40000, "data/preprocess/tokenized/test.txt")
+
+
+# to debug
+# t.do_linear(pd.read_csv("data/splits/debug/all.txt"), 0, 40000, "data/preprocess/tokenized/all.txt")
+# t.do_linear(pd.read_csv("data/splits/debug/train.txt"), 0, 40000, "data/preprocess/tokenized/train.txt")
+# t.do_linear(pd.read_csv("data/splits/debug/val.txt"), 0, 40000, "data/preprocess/tokenized/val.txt")
+# t.do_linear(pd.read_csv("data/splits/debug/test.txt"), 0, 40000, "data/preprocess/tokenized/test.txt")
