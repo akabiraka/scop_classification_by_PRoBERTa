@@ -9,13 +9,13 @@ from torch.utils.tensorboard import SummaryWriter
 from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecaySchedule
 from fairseq.optim.adam import FairseqAdam
 
-init_lr=0.0025
+peak_lr=0.0025
 batch_size=16
 epochs=100
-warmup_updates=int(epochs/4)
+warmup_updates=int(epochs*0.40) #40% epochs for warmup
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-out_filename = f"Sch_{init_lr}_{batch_size}_{epochs}_{warmup_updates}_{device}"
+out_filename = f"Sch_{peak_lr}_{batch_size}_{epochs}_{warmup_updates}_{device}"
 print(out_filename)
 
 
@@ -34,13 +34,13 @@ class Object(object):
     pass
 
 optim_args = Object()
-optim_args.lr = [init_lr]
+optim_args.lr = [0.0]
 optim_args.adam_betas = "(0.9, 0.98)"
 optim_args.adam_eps = 1e-06
 optim_args.weight_decay = 0.01
 
 scheduler_args = Object()
-scheduler_args.lr = init_lr, 
+scheduler_args.lr = peak_lr, 
 scheduler_args.warmup_updates = warmup_updates
 scheduler_args.total_num_update = epochs
 scheduler_args.end_learning_rate = 0.0
