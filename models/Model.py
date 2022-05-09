@@ -54,7 +54,7 @@ def run_batch(model, batch_df, class_dict, criterion, device):
     batch_loss = criterion(pred_classes, target_classes)
     print(batch_loss)
  
-    return batch_loss, get_metrics(target_classes, pred_classes.argmax(dim=1))
+    return batch_loss, get_metrics(target_classes.cpu().numpy(), pred_classes.argmax(dim=1).cpu().numpy())
 
 
 def train(model, train_loader, class_dict, criterion, optimizer, device):
