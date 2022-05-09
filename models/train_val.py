@@ -1,3 +1,4 @@
+from pickletools import optimize
 import sys
 sys.path.append("../scop_classification_by_PRoBERTa")
 import os
@@ -9,8 +10,8 @@ from torch.utils.tensorboard import SummaryWriter
 from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecaySchedule
 from fairseq.optim.adam import FairseqAdam
 
-peak_lr=0.0025
-batch_size=16
+peak_lr=0.001
+batch_size=64
 epochs=100
 warmup_updates=int(epochs*0.40) #40% epochs for warmup
 
@@ -29,27 +30,29 @@ print(f"n_classes: {n_classes}")
 model = Model.Pooler(n_classes).to(device)
 # print(model)
 criterion = torch.nn.CrossEntropyLoss()
-
-class Object(object):
-    pass
-
-optim_args = Object()
-optim_args.lr = [0.0]
-optim_args.adam_betas = "(0.9, 0.98)"
-optim_args.adam_eps = 1e-06
-optim_args.weight_decay = 0.01
-
-scheduler_args = Object()
-scheduler_args.lr = peak_lr, 
-scheduler_args.warmup_updates = warmup_updates
-scheduler_args.total_num_update = epochs
-scheduler_args.end_learning_rate = 0.0
-scheduler_args.power = 1.0
-
-
-optimizer = FairseqAdam(optim_args, params=model.parameters())
-scheduler = PolynomialDecaySchedule(scheduler_args, optimizer=optimizer)
+optimizer = torch.optim.AdamW(model.parameters(), lr=peak_lr)
 writer = SummaryWriter(f"outputs/tensorboard_runs/{out_filename}")
+
+# class Object(object):
+#     pass
+
+# optim_args = Object()
+# optim_args.lr = [0.0]
+# optim_args.adam_betas = "(0.9, 0.98)"
+# optim_args.adam_eps = 1e-06
+# optim_args.weight_decay = 0.01
+
+# scheduler_args = Object()
+# scheduler_args.lr = peak_lr, 
+# scheduler_args.warmup_updates = warmup_updates
+# scheduler_args.total_num_update = epochs
+# scheduler_args.end_learning_rate = 0.0
+# scheduler_args.power = 1.0
+
+
+# optimizer = FairseqAdam(optim_args, params=model.parameters())
+# scheduler = PolynomialDecaySchedule(scheduler_args, optimizer=optimizer)
+
 
 # load the AUC/loss based model checkpoint 
 # if os.path.exists(f"outputs/models/{out_filename}.pth"):
@@ -76,7 +79,7 @@ for epoch in range(1, epochs+1):
     train_loss = Model.train(model, train_loader, class_dict, criterion, optimizer, device)
     val_loss, metrics = Model.test(model, val_loader, class_dict, criterion, device)
 
-    scheduler.step(epoch)
+    # scheduler.step(epoch)
     crnt_lr = optimizer.param_groups[0]["lr"]
     print(f"Epoch: {epoch:03d}, crnt_lr: {crnt_lr:.5f}, train loss: {train_loss:.4f}, val loss: {val_loss:.4f}, acc: {metrics['acc']:.3f}")
     writer.add_scalar('train loss',train_loss,epoch)
