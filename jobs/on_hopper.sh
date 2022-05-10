@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=scop
-#SBATCH --output=/scratch/akabir4/scop_classification/outputs/argo_logs/scop-%j.out
-#SBATCH --error=/scratch/akabir4/scop_classification/outputs/argo_logs/scop-%j.err
+#SBATCH --job-name=pbertH
+#SBATCH --output=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbertH-%j.out
+#SBATCH --error=/scratch/akabir4/scop_classification_by_PRoBERTa/outputs/argo_logs/pbertH-%j.err
 #SBATCH --mail-user=<akabir4@gmu.edu>
 #SBATCH --mail-type=BEGIN,END,FAIL
 
