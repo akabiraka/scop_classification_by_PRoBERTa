@@ -92,16 +92,16 @@ for epoch in range(1, epochs+1):
     # scheduler.step(epoch)
     crnt_lr = optimizer.param_groups[0]["lr"]
     print(f"Epoch: {epoch:03d}, crnt_lr: {crnt_lr:.5f}, train loss: {train_loss:.4f}, val loss: {val_loss:.4f}, acc: {metrics['acc']:.3f}")
-    # writer.add_scalar('train loss',train_loss,epoch)
-    # writer.add_scalar('val loss',val_loss,epoch)
-    # writer.add_scalar('acc',metrics["acc"],epoch)
-    # writer.add_scalar('precision',metrics["precision"],epoch)
-    # writer.add_scalar('recall',metrics["recall"],epoch)
-    # writer.add_scalar('crnt_lr',crnt_lr,epoch)
+    writer.add_scalar('train loss',train_loss,epoch)
+    writer.add_scalar('val loss',val_loss,epoch)
+    writer.add_scalar('acc',metrics["acc"],epoch)
+    writer.add_scalar('precision',metrics["precision"],epoch)
+    writer.add_scalar('recall',metrics["recall"],epoch)
+    writer.add_scalar('crnt_lr',crnt_lr,epoch)
     
 
-    # if val_loss < best_loss:
-    #     best_loss = val_loss
-    #     torch.save({'epoch': epoch,
-    #                 'model_state_dict': model.state_dict(),
-    #                 }, f"outputs/models/{out_filename}.pth")
+    if val_loss < best_loss:
+        best_loss = val_loss
+        torch.save({'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    }, f"outputs/models/{out_filename}.pth")
