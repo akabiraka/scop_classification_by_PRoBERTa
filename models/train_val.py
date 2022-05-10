@@ -6,17 +6,19 @@ import torch
 import pandas as pd
 import models.dataloader as Dataloader
 import models.Model as Model
+from sklearn.utils.class_weight import compute_class_weight
 from torch.utils.tensorboard import SummaryWriter
 from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecaySchedule
 from fairseq.optim.adam import FairseqAdam
 
+
 peak_lr=0.001
 batch_size=64
-epochs=100
-warmup_updates=int(epochs*0.40) #40% epochs for warmup
+epochs=300
+# warmup_updates=int(epochs*0.40) #40% epochs for warmup
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-out_filename = f"Sch_{peak_lr}_{batch_size}_{epochs}_{warmup_updates}_{device}"
+device = "cpu"# "cuda" if torch.cuda.is_available() else "cpu"
+out_filename = f"clsW_{peak_lr}_{batch_size}_{epochs}_{device}"
 print(out_filename)
 
 
@@ -27,9 +29,17 @@ class_dict = {label:i for i, label in enumerate(df[label_col].unique())}
 n_classes = len(class_dict)
 print(f"n_classes: {n_classes}")
 
+
+# computing class weights from the train data
+train_df = pd.read_csv("data/preprocess/tokenized/train.txt", header=None)
+class_weights = compute_class_weight("balanced", classes=train_df[label_col].unique(), y=train_df[label_col].to_numpy())
+class_weights = torch.tensor(class_weights, dtype=torch.float)
+# print(train_df[label_col].value_counts(sort=False))
+# print(class_weights)
+
 model = Model.Pooler(n_classes).to(device)
 # print(model)
-criterion = torch.nn.CrossEntropyLoss()
+criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
 optimizer = torch.optim.AdamW(model.parameters(), lr=peak_lr)
 writer = SummaryWriter(f"outputs/tensorboard_runs/{out_filename}")
 
@@ -82,16 +92,16 @@ for epoch in range(1, epochs+1):
     # scheduler.step(epoch)
     crnt_lr = optimizer.param_groups[0]["lr"]
     print(f"Epoch: {epoch:03d}, crnt_lr: {crnt_lr:.5f}, train loss: {train_loss:.4f}, val loss: {val_loss:.4f}, acc: {metrics['acc']:.3f}")
-    writer.add_scalar('train loss',train_loss,epoch)
-    writer.add_scalar('val loss',val_loss,epoch)
-    writer.add_scalar('acc',metrics["acc"],epoch)
-    writer.add_scalar('precision',metrics["precision"],epoch)
-    writer.add_scalar('recall',metrics["recall"],epoch)
-    writer.add_scalar('crnt_lr',crnt_lr,epoch)
+    # writer.add_scalar('train loss',train_loss,epoch)
+    # writer.add_scalar('val loss',val_loss,epoch)
+    # writer.add_scalar('acc',metrics["acc"],epoch)
+    # writer.add_scalar('precision',metrics["precision"],epoch)
+    # writer.add_scalar('recall',metrics["recall"],epoch)
+    # writer.add_scalar('crnt_lr',crnt_lr,epoch)
     
 
-    if val_loss < best_loss:
-        best_loss = val_loss
-        torch.save({'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    }, f"outputs/models/{out_filename}.pth")
+    # if val_loss < best_loss:
+    #     best_loss = val_loss
+    #     torch.save({'epoch': epoch,
+    #                 'model_state_dict': model.state_dict(),
+    #                 }, f"outputs/models/{out_filename}.pth")
