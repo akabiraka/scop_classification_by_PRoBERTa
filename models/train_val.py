@@ -17,7 +17,7 @@ batch_size=64
 epochs=300
 # warmup_updates=int(epochs*0.40) #40% epochs for warmup
 
-device = "cpu"# "cuda" if torch.cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available() else "cpu" # "cpu"# 
 out_filename = f"clsW_{peak_lr}_{batch_size}_{epochs}_{device}"
 print(out_filename)
 
