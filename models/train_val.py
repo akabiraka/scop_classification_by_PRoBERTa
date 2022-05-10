@@ -12,7 +12,7 @@ from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecay
 from fairseq.optim.adam import FairseqAdam
 
 
-peak_lr=0.00001
+peak_lr=0.001
 batch_size=64
 epochs=300
 # warmup_updates=int(epochs*0.40) #40% epochs for warmup
