@@ -12,13 +12,13 @@ from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecay
 from fairseq.optim.adam import FairseqAdam
 
 
-peak_lr=0.001
+peak_lr=1e-5
 batch_size=64
 epochs=300
 # warmup_updates=int(epochs*0.40) #40% epochs for warmup
 
 device = "cuda" if torch.cuda.is_available() else "cpu" # "cpu"# 
-out_filename = f"clsW_{peak_lr}_{batch_size}_{epochs}_{device}"
+out_filename = f"CW_{peak_lr}_{batch_size}_{epochs}_{device}"
 print(out_filename)
 
 

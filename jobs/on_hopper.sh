@@ -27,4 +27,4 @@
 
 ## gpu jobs
 nvidia-smi
-python models/train_test.py
+python models/train_val.py
