@@ -12,7 +12,7 @@ from fairseq.optim.lr_scheduler.polynomial_decay_schedule import PolynomialDecay
 from fairseq.optim.adam import FairseqAdam
 
 
-peak_lr=0.001
+peak_lr=0.00001
 batch_size=64
 epochs=300
 # warmup_updates=int(epochs*0.40) #40% epochs for warmup
@@ -33,7 +33,7 @@ print(f"n_classes: {n_classes}")
 # computing class weights from the train data
 train_df = pd.read_csv("data/preprocess/tokenized/train.txt", header=None)
 class_weights = compute_class_weight("balanced", classes=train_df[label_col].unique(), y=train_df[label_col].to_numpy())
-class_weights = torch.tensor(class_weights, dtype=torch.float)
+class_weights = torch.tensor(class_weights, dtype=torch.float, device=device)
 # print(train_df[label_col].value_counts(sort=False))
 # print(class_weights)
 
