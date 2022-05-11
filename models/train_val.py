@@ -87,7 +87,7 @@ for epoch in range(1, epochs+1):
     val_loader = Dataloader.get_batched_data("data/preprocess/tokenized/val.txt", batch_size=0) #batch_size=0 means taking all
 
     train_loss = Model.train(model, train_loader, class_dict, criterion, optimizer, device)
-    val_loss, metrics = Model.val(model, val_loader, class_dict, criterion, device)
+    val_loss, metrics = Model.test(model, val_loader, class_dict, criterion, device)
 
     # scheduler.step(epoch)
     crnt_lr = optimizer.param_groups[0]["lr"]
