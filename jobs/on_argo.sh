@@ -18,5 +18,5 @@
 #SBATCH --time=1-24:00
 
 ##python generators/Tokenizer.py
-python models/train_val.py
-
+##python models/train_val.py
+python models/eval.py
