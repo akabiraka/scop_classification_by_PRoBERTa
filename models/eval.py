@@ -19,7 +19,7 @@ print(out_filename)
 
 # data specific things
 seq_col, label_col = 0, 1
-df = pd.read_csv("data/splits/all.txt", header=None)
+df = pd.read_csv("data/preprocess/tokenized/all.txt", header=None)
 class_dict = {label:i for i, label in enumerate(df[label_col].unique())}
 n_classes = len(class_dict)
 print(f"n_classes: {n_classes}")
@@ -54,9 +54,9 @@ Utils.save_as_pickle(metrics, f"outputs/predictions/{out_filename}_val_result.pk
 
 
 # evaluating test set
-# test_loader = Dataloader.get_batched_data("data/preprocess/tokenized/test.txt", batch_size=0) #batch_size=0 means taking all
-# print(f"test data: {len(test_loader)}")
-# metrics = test(model, criterion, test_loader, device)
-# print(f"Test: {metrics}")
-# Utils.save_as_pickle(metrics, f"outputs/predictions/{out_filename}_test_result.pkl")
+test_loader = Dataloader.get_batched_data("data/preprocess/tokenized/test.txt", batch_size=0) #batch_size=0 means taking all
+print(f"test data: {len(test_loader)}")
+metrics = test(model, test_loader[0], class_dict, device)
+print(f"Test: {metrics}")
+Utils.save_as_pickle(metrics, f"outputs/predictions/{out_filename}_test_result.pkl")
 
