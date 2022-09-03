@@ -9,14 +9,14 @@ import matplotlib.pyplot as plt
 
 def print_acc_prec_rec_f1_score(target_classes, pred_classes):
     acc = accuracy_score(target_classes, pred_classes)
-    precision = precision_score(target_classes, pred_classes, average="weighted")
-    recall = recall_score(target_classes, pred_classes, average="weighted")
-    f1 = f1_score(target_classes, pred_classes, average="weighted")
+    precision = precision_score(target_classes, pred_classes, average="weighted", zero_division=1)
+    recall = recall_score(target_classes, pred_classes, average="weighted", zero_division=1)
+    f1 = f1_score(target_classes, pred_classes, average="weighted", zero_division=1)
     print(f"acc: {acc}, precision: {precision}, recall: {recall}, f1: {f1}")
 
 
 def print_roc_auc_score(target_cls_distributions, pred_cls_distributions):
-    roc_auc = roc_auc_score(target_cls_distributions, pred_cls_distributions, average="micro", multi_class="ovr")
+    roc_auc = roc_auc_score(target_cls_distributions, pred_cls_distributions, average="samples", multi_class="ovr")
     print(f"roc_auc: {roc_auc}")
 
 
